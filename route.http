@@ -1,0 +1,78 @@
+POST https://expense-tracker-api-o7xn.onrender.com/register
+Content-Type: application/json
+
+{
+    "name": "Jonh Doe2",
+    "email": "john@doe2.com",
+    "password": "123"
+}
+
+###
+
+POST https://expense-tracker-api-o7xn.onrender.com/login
+Content-Type: application/json
+
+{
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+
+###
+
+
+POST https://expense-tracker-api-o7xn.onrender.com/records
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzA0NTAyNSwiZXhwIjoxNzA3MDQ4NjI1fQ.wlBMlOdUzy0VLr4KWx35jRHMPMHhNoIjCWdHxbRsOfk
+Content-Type: application/json
+
+{
+  "date": "2024-01-16T12:00:00Z",
+  "value": 20.50,
+  "category": "tiner",
+  "description": "ALGO"
+
+}
+
+
+###
+
+
+GET http://localhost:3001/records
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE2MjE4MSwiZXhwIjoxNzA3MTY1NzgxfQ.esZ_QVZ6bUTn9AW3Weacz3stmCedpyD403cC9VJALYM
+
+###
+
+
+DELETE https://expense-tracker-api-o7xn.onrender.com/record/6a2b722d-c9a8-4628-a47c-90b78ca37cc2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MDYyOTUxMDYsImV4cCI6MTcwNjI5NTE2Nn0.POsLT-fmowT5EoxxxQMq3Xtk_ou5SOC5NSyW3f6d_rg
+
+
+###
+
+
+PUT https://expense-tracker-api-o7xn.onrender.com/record/f9e4b6b2-4faa-494a-9267-920cd845f806
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MDYyOTUxMDYsImV4cCI6MTcwNjI5NTE2Nn0.POsLT-fmowT5EoxxxQMq3Xtk_ou5SOC5NSyW3f6d_rg
+Content-Type: application/json
+
+{
+  "date": "2024-01-16T12:00:00Z",
+  "value": 80.90,
+  "category": "ALIMENTACAO2",
+  "description": "MERCADAO"
+}
+
+###
+
+POST  https://expense-tracker-api-o7xn.onrender.com/refresh
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTcwNjM5NzEyOSwiZXhwIjoxNzA3MDAxOTI5fQ.0tDdLAiPv44bwFYRF6v-Ucc-5npHPpgZug9bMpVZ8HE
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
+}
+###
+
+
+POST   http://localhost:3001/ping
+
+###
