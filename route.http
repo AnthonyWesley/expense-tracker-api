@@ -76,3 +76,8 @@ Content-Type: application/json
 POST   http://localhost:3001/ping
 
 ###
+
+
+POST   https://expense-tracker-api-o7xn.onrender.com/ping
+
+###
