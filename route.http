@@ -1,9 +1,9 @@
-POST https://expense-tracker-api-o7xn.onrender.com/register
+POST https://expense-tracker-api-e91c.onrender.com/register
 Content-Type: application/json
 
 {
-    "name": "Jonh Doe2",
-    "email": "john@doe2.com",
+    "name": "Jonh Doe3",
+    "email": "john@doe3.com",
     "password": "123"
 }
 
@@ -13,7 +13,7 @@ POST https://expense-tracker-api-e91c.onrender.com/login
 Content-Type: application/json
 
 {
-    "email": "john@doe.com",
+    "email": "john@doe3.com",
     "password": "123"
 }
 
@@ -72,30 +72,3 @@ Content-Type: application/json
 }
 ###
 
-
-POST   http://localhost:3001/ping
-Content-Type: application/json
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
-}
-
-###
-
-
-POST   https://expense-tracker-api-e91c.onrender.com/ping
-Content-Type: application/json
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
-}
-###
-
-
-POST   https://expense-tracker-api-e91c.onrender.com/ping2
-Content-Type: application/json
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
-}
-###

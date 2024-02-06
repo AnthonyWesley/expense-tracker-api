@@ -16,7 +16,4 @@ router.delete("/record/:id", authorization, expensesController.deleteRecord);
 
 router.post("/refresh", expensesController.refreshToken);
 
-router.post("/ping", expensesController.pingPong);
-router.post("/ping2", expensesController.pingPong2);
-
 export default router;
