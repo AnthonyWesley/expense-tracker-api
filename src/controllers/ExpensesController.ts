@@ -196,6 +196,14 @@ class ExpensesController {
 
     return res.status(200).json({ success: true, records });
   }
+
+  async pingPong2(req: Request, res: Response) {
+    const body = req.body;
+
+    const records = await Record.findAll();
+
+    return res.status(200).json({ success: true, records, body });
+  }
 }
 
 export const expensesController = new ExpensesController();

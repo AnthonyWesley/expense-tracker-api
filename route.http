@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-api-o7xn.onrender.com/login
+POST https://expense-tracker-api-e91c.onrender.com/login
 Content-Type: application/json
 
 {
@@ -37,8 +37,8 @@ Content-Type: application/json
 ###
 
 
-GET http://localhost:3001/records
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE2MjE4MSwiZXhwIjoxNzA3MTY1NzgxfQ.esZ_QVZ6bUTn9AW3Weacz3stmCedpyD403cC9VJALYM
+GET https://expense-tracker-api-e91c.onrender.com/records
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE3NzUzOSwiZXhwIjoxNzA3MTgxMTM5fQ.fbF_8tr0y4RVV32713mR-OkelObFtBnJUW8H-Jyc5P4
 
 ###
 
@@ -74,10 +74,28 @@ Content-Type: application/json
 
 
 POST   http://localhost:3001/ping
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
+}
 
 ###
 
 
-POST   https://expense-tracker-api-o7xn.onrender.com/ping
+POST   https://expense-tracker-api-e91c.onrender.com/ping
+Content-Type: application/json
 
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
+}
+###
+
+
+POST   https://expense-tracker-api-e91c.onrender.com/ping2
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImlhdCI6MTcwNzAxNzIxMiwiZXhwIjoxNzA3NjIyMDEyfQ.vUkx3h-l7gROyF_U3UkEVu6onN1kikUXoCxG1CTU9rk"
+}
 ###
