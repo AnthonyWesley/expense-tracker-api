@@ -4,8 +4,8 @@ import cors from "cors";
 
 const server = express();
 
-server.use(cors());
-
+// server.use(cors());
+server.use(cors({ origin: "*" }));
 server.use(express.json());
 
 server.use(router);
