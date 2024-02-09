@@ -108,7 +108,9 @@ class ExpensesController {
       if (records && records.length > 0) {
         return res.status(200).json({ success: true, records });
       } else {
-        return res.json({});
+        return res
+          .status(404)
+          .json({ error: "Not Found", message: "User records not found" });
       }
     } catch (error) {
       console.error(error);
