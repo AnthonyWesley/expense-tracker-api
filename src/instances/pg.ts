@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+let { SBPASSWORD } = process.env;
 
 export const sequelize = new Sequelize(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
+  `postgres://postgres.ppojpgqwcqigxlgcoigl:${SBPASSWORD}@aws-0-sa-east-1.pooler.supabase.com:5432/postgres`,
   {
     host: "0.0.0.0",
     dialect: "postgres",
@@ -14,16 +14,12 @@ export const sequelize = new Sequelize(
   }
 );
 
-// import { Sequelize } from "sequelize";
-// import dotenv from "dotenv";
-
-// dotenv.config();
+// let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
 // export const sequelize = new Sequelize(
-//   process.env.PG_DB as string,
-//   process.env.PG_USER as string,
-//   process.env.PG_PASSWORD as string,
+//   `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
 //   {
+//     host: "0.0.0.0",
 //     dialect: "postgres",
 //     port: parseInt(process.env.PG_PORT as string),
 //   }
