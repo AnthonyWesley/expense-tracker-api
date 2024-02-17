@@ -1,8 +1,8 @@
-POST https://expense-tracker-api-020x.onrender.com/register
+POST https://expense-tracker-api-k7ih.onrender.com/register
 Content-Type: application/json
 
 {
-    "name": "Jonh Doe",
+    "name": "",
     "email": "john@doe1.com",
     "password": "123"
 }
@@ -37,7 +37,7 @@ Content-Type: application/json
 ###
 
 
-GET https://expense-tracker-api-020x.onrender.com/records
+GET https://expense-tracker-api-k7ih.onrender.com/records
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE3NzUzOSwiZXhwIjoxNzA3MTgxMTM5fQ.fbF_8tr0y4RVV32713mR-OkelObFtBnJUW8H-Jyc5P4
 
 ###

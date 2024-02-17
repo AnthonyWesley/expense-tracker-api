@@ -8,6 +8,14 @@ class ExpensesController {
   async register(req: Request, res: Response) {
     try {
       const { name, email, password } = req.body;
+      if (!name || !email || !password) {
+        return res
+          .status(400)
+          .json({
+            error: "Bad Request",
+            message: "Missing Data. Please provide all required information.",
+          });
+      }
 
       const user = await User.findOne({ where: { email } });
 
