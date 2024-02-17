@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-let { SBPASSWORD, SBHOST } = process.env;
+let { SB_PASSWORD, SB_HOST, SB_USER, SB_PORT, SB_DB } = process.env;
 
 export const sequelize = new Sequelize(
-  `postgres://postgres.ppojpgqwcqigxlgcoigl:awnnawl777x7@aws-0-sa-east-1.pooler.supabase.com:5432/postgres`,
+  `postgres://${SB_USER}.ppojpgqwcqigxlgcoigl:${SB_PASSWORD}@${SB_HOST}:${SB_PORT}/${SB_DB}`,
   {
     host: "0.0.0.0",
     dialect: "postgres",
