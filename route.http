@@ -2,8 +2,8 @@ POST https://expense-tracker-api-e91c.onrender.com/register
 Content-Type: application/json
 
 {
-    "name": "Jonh Doe3",
-    "email": "john@doe3.com",
+    "name": "Jonh Doe",
+    "email": "john@doe.com",
     "password": "123"
 }
 
@@ -13,7 +13,7 @@ POST https://expense-tracker-api-e91c.onrender.com/login
 Content-Type: application/json
 
 {
-    "email": "john@doe3.com",
+    "email": "john@doe.com",
     "password": "123"
 }
 
