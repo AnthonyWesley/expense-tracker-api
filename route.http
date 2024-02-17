@@ -1,4 +1,4 @@
-POST https://expense-tracker-api-e91c.onrender.com/register
+POST https://expense-tracker-api-020x.onrender.com/register
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-api-e91c.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
 ###
 
 
-GET https://expense-tracker-api-e91c.onrender.com/records
+GET https://expense-tracker-api-020x.onrender.com/records
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE3NzUzOSwiZXhwIjoxNzA3MTgxMTM5fQ.fbF_8tr0y4RVV32713mR-OkelObFtBnJUW8H-Jyc5P4
 
 ###
