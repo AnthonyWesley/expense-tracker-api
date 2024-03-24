@@ -9,7 +9,7 @@ export interface CategoryInstance extends Model {
   expense?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  user_id: string; // Renomeado para corresponder ao nome da coluna no banco de dados
+  userId: string;
 }
 
 export const Category = sequelize.define(
@@ -44,7 +44,7 @@ export const Category = sequelize.define(
       defaultValue: DataTypes.NOW,
       field: "updated_at",
     },
-    user_id: {
+    userId: {
       type: DataTypes.UUID,
       allowNull: false,
       field: "user_id",
@@ -55,5 +55,5 @@ export const Category = sequelize.define(
   }
 );
 
-User.hasMany(Category, { foreignKey: "user_id" });
-Category.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Category, { foreignKey: "userId" });
+Category.belongsTo(User, { foreignKey: "userId" });

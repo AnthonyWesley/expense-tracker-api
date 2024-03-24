@@ -3,7 +3,7 @@ import { sequelize } from "../instances/pg";
 import bcrypt from "bcryptjs";
 
 export interface UserInstance extends Model {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -17,7 +17,7 @@ export const User = sequelize.define<UserInstance>(
     id: {
       primaryKey: true,
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     email: {
       type: DataTypes.STRING,
