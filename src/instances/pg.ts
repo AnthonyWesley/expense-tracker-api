@@ -13,3 +13,8 @@ export const sequelize = new Sequelize(
     port: parseInt(process.env.PG_PORT as string),
   }
 );
+
+// export const sequelize = new Sequelize("postgres", "postgres", "1234", {
+//   host: "localhost",
+//   dialect: "postgres",
+// });

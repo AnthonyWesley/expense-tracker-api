@@ -1,0 +1,60 @@
+
+POST http://localhost:3001/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@doe1.com",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3001/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
+Content-Type: application/json
+
+{
+  "title": "Salário",
+  "color": "#10b981",
+  "expense": false
+}
+
+###
+
+
+GET  http://localhost:3001/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
+
+###
+
+
+PUT  http://localhost:3001/category/0d6f17b8-7127-4f16-b146-00be806e1899
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
+Content-Type: application/json
+
+{
+  "title": "Salario566666",
+  "color": "#10b981",
+  "expense": false
+}
+
+###
+
+DELETE  http://localhost:3001/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
+
+
+###
+
+

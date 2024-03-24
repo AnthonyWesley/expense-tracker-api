@@ -27,12 +27,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/models/User.ts
-var User_exports = {};
-__export(User_exports, {
-  User: () => User
+// src/services/UserService.ts
+var UserService_exports = {};
+__export(UserService_exports, {
+  userService: () => userService
 });
-module.exports = __toCommonJS(User_exports);
+module.exports = __toCommonJS(UserService_exports);
+
+// src/models/User.ts
 var import_sequelize2 = require("sequelize");
 
 // src/instances/pg.ts
@@ -87,7 +89,39 @@ var User = sequelize.define(
     }
   }
 );
+
+// src/services/UserService.ts
+var import_bcryptjs2 = __toESM(require("bcryptjs"));
+var UserService = class {
+  async register({ name, email, password }) {
+    try {
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        const createUser = await User.create({ name, email, password });
+        return createUser;
+      }
+    } catch (error) {
+      console.error("Error in user creation:", error);
+      throw new Error("Failed to create user");
+    }
+  }
+  async login({ email, password }) {
+    try {
+      const user = await User.findOne({ where: { email } });
+      if (user) {
+        const decryptedPassword = await import_bcryptjs2.default.compare(password, user.password);
+        if (decryptedPassword) {
+          return user;
+        }
+      }
+    } catch (error) {
+      console.error("Error in user login:", error);
+      throw new Error("Failed to login user");
+    }
+  }
+};
+var userService = new UserService();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  User
+  userService
 });

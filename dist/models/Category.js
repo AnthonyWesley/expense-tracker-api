@@ -27,13 +27,13 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/models/User.ts
-var User_exports = {};
-__export(User_exports, {
-  User: () => User
+// src/models/Category.ts
+var Category_exports = {};
+__export(Category_exports, {
+  Category: () => Category
 });
-module.exports = __toCommonJS(User_exports);
-var import_sequelize2 = require("sequelize");
+module.exports = __toCommonJS(Category_exports);
+var import_sequelize3 = require("sequelize");
 
 // src/instances/pg.ts
 var import_sequelize = require("sequelize");
@@ -45,6 +45,7 @@ var sequelize = new import_sequelize.Sequelize("postgres", "postgres", "1234", {
 });
 
 // src/models/User.ts
+var import_sequelize2 = require("sequelize");
 var import_bcryptjs = __toESM(require("bcryptjs"));
 var User = sequelize.define(
   "User",
@@ -87,7 +88,48 @@ var User = sequelize.define(
     }
   }
 );
+
+// src/models/Category.ts
+var Category = sequelize.define(
+  "Category",
+  {
+    id: {
+      type: import_sequelize3.DataTypes.UUID,
+      defaultValue: import_sequelize3.UUIDV4,
+      primaryKey: true
+    },
+    title: {
+      type: import_sequelize3.DataTypes.STRING,
+      allowNull: false
+    },
+    color: {
+      type: import_sequelize3.DataTypes.STRING,
+      allowNull: false
+    },
+    expense: {
+      type: import_sequelize3.DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    createdAt: {
+      type: import_sequelize3.DataTypes.DATE,
+      allowNull: false,
+      defaultValue: import_sequelize3.DataTypes.NOW,
+      field: "created_at"
+    },
+    updatedAt: {
+      type: import_sequelize3.DataTypes.DATE,
+      allowNull: false,
+      defaultValue: import_sequelize3.DataTypes.NOW,
+      field: "updated_at"
+    }
+  },
+  {
+    tableName: "categories"
+  }
+);
+User.hasMany(Category, { foreignKey: "userId" });
+Category.belongsTo(User, { foreignKey: "userId" });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  User
+  Category
 });

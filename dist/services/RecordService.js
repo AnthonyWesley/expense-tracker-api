@@ -27,12 +27,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/models/Record.ts
-var Record_exports = {};
-__export(Record_exports, {
-  Record: () => Record
+// src/services/RecordService.ts
+var RecordService_exports = {};
+__export(RecordService_exports, {
+  recordService: () => recordService
 });
-module.exports = __toCommonJS(Record_exports);
+module.exports = __toCommonJS(RecordService_exports);
+
+// src/models/Record.ts
 var import_sequelize3 = require("sequelize");
 
 // src/instances/pg.ts
@@ -138,7 +140,97 @@ var Record = sequelize.define(
 );
 User.hasMany(Record, { foreignKey: "userId" });
 Record.belongsTo(User, { foreignKey: "userId" });
+
+// src/services/RecordService.ts
+var RecordService = class {
+  async create(decodeId, { date, value, description, category }) {
+    try {
+      const user = await User.findOne({ where: { id: decodeId } });
+      if (!user) {
+        throw new Error("User not found for record creation");
+      }
+      const newRecord = await Record.create({
+        date,
+        value,
+        description,
+        category,
+        userId: decodeId
+      });
+      return newRecord;
+    } catch (error) {
+      console.error("Error in record creation:", error);
+      throw new Error("Failed to create record");
+    }
+  }
+  async read(decodeId) {
+    try {
+      if (decodeId == null) {
+        throw new Error("Invalid user ID");
+      }
+      const categories = await Record.findAll({
+        where: { userId: decodeId }
+      });
+      return categories;
+    } catch (error) {
+      console.error("Error in reading categories:", error);
+      throw new Error("Failed to read categories");
+    }
+  }
+  async update(paramsId, decodeId, { date, value, description, category }) {
+    try {
+      const existingRecord = await Record.findOne({
+        where: { userId: decodeId, id: paramsId }
+      });
+      if (!existingRecord) {
+        throw new Error("Record not found");
+      }
+      const updatedCategory = await existingRecord.update({
+        date,
+        value,
+        description,
+        category
+      });
+      return updatedCategory;
+    } catch (error) {
+      console.error("Error in updating category:", error);
+      throw new Error("Failed to update category");
+    }
+  }
+  async delete(paramsId, decodeId) {
+    try {
+      const existingRecord = await Record.findOne({
+        where: { userId: decodeId, id: paramsId }
+      });
+      if (!existingRecord) {
+        throw new Error("Record not found");
+      }
+      const deletedCategoriesCount = await Record.destroy({
+        where: { userId: decodeId, id: paramsId }
+      });
+      return deletedCategoriesCount;
+    } catch (error) {
+      console.error("Error in deleting category:", error);
+      throw new Error("Failed to delete category");
+    }
+  }
+  async updateManyTitles(currentName, updateName) {
+    try {
+      const findRecords = await Record.update(
+        { category: updateName.toUpperCase().trim() },
+        { where: { category: currentName.toUpperCase().trim() } }
+      );
+      if (!findRecords) {
+        throw new Error("Registers not found");
+      }
+      return findRecords;
+    } catch (error) {
+      console.error("Error in updating category:", error);
+      throw new Error("Failed to update category");
+    }
+  }
+};
+var recordService = new RecordService();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  Record
+  recordService
 });

@@ -1,15 +1,15 @@
-POST https://expense-tracker-api-k7ih.onrender.com/register
+POST http://localhost:3001/register
 Content-Type: application/json
 
 {
-    "name": "",
+    "name": "Jonh Doe",
     "email": "john@doe1.com",
     "password": "123"
 }
 
 ###
 
-POST https://expense-tracker-api-k7ih.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -21,15 +21,15 @@ Content-Type: application/json
 ###
 
 
-POST https://expense-tracker-api-o7xn.onrender.com/records
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzA0NTAyNSwiZXhwIjoxNzA3MDQ4NjI1fQ.wlBMlOdUzy0VLr4KWx35jRHMPMHhNoIjCWdHxbRsOfk
+POST http://localhost:3001/records
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
 Content-Type: application/json
 
 {
-  "date": "2024-01-16T12:00:00Z",
+  "date": "2024-03-16T12:00:00Z",
   "value": 20.50,
-  "category": "tiner",
-  "description": "ALGO"
+  "category": "FARMACIA",
+  "description": "ALKK"
 
 }
 
@@ -37,33 +37,33 @@ Content-Type: application/json
 ###
 
 
-GET https://expense-tracker-api-k7ih.onrender.com/records
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcwNzE3NzUzOSwiZXhwIjoxNzA3MTgxMTM5fQ.fbF_8tr0y4RVV32713mR-OkelObFtBnJUW8H-Jyc5P4
+GET http://localhost:3001/records
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
 
 ###
 
 
-DELETE https://expense-tracker-api-o7xn.onrender.com/record/6a2b722d-c9a8-4628-a47c-90b78ca37cc2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MDYyOTUxMDYsImV4cCI6MTcwNjI5NTE2Nn0.POsLT-fmowT5EoxxxQMq3Xtk_ou5SOC5NSyW3f6d_rg
+DELETE http://localhost:3001/record/68e27cea-45b7-4011-b423-9268c46790ac
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
 
 
 ###
 
 
-PUT https://expense-tracker-api-o7xn.onrender.com/record/f9e4b6b2-4faa-494a-9267-920cd845f806
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MDYyOTUxMDYsImV4cCI6MTcwNjI5NTE2Nn0.POsLT-fmowT5EoxxxQMq3Xtk_ou5SOC5NSyW3f6d_rg
+PUT http://localhost:3001/record/68e27cea-45b7-4011-b423-9268c46790ac
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
 Content-Type: application/json
 
 {
   "date": "2024-01-16T12:00:00Z",
   "value": 80.90,
-  "category": "ALIMENTACAO2",
-  "description": "MERCADAO"
+  "category": "Mercado",
+  "description": "mercado"
 }
 
 ###
 
-POST  https://expense-tracker-api-o7xn.onrender.com/refresh
+POST  http://localhost:3001/refresh
 # Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTcwNjM5NzEyOSwiZXhwIjoxNzA3MDAxOTI5fQ.0tDdLAiPv44bwFYRF6v-Ucc-5npHPpgZug9bMpVZ8HE
 Content-Type: application/json
 
@@ -72,3 +72,14 @@ Content-Type: application/json
 }
 ###
 
+
+PUT http://localhost:3001/records/update
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Content-Type: application/json
+
+{
+  "currentName": "mercearia",
+  "updateName": "mercado"
+}
+
+###
