@@ -24,6 +24,7 @@ class UserService {
       const user = await User.findOne({ where: { email } });
       if (user) {
         const decryptedPassword = await bcrypt.compare(password, user.password);
+        console.log(decryptedPassword);
 
         if (decryptedPassword) {
           return user;

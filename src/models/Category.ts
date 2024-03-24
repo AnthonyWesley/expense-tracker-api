@@ -43,6 +43,11 @@ export const Category = sequelize.define(
       defaultValue: DataTypes.NOW,
       field: "updated_at",
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: "user_id",
+    },
   },
   {
     tableName: "categories",

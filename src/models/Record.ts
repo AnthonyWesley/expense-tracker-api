@@ -8,7 +8,7 @@ export interface RecordInstance extends Model {
   value: number;
   category: string;
   description: string;
-  userId: number;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
 }
