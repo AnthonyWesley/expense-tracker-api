@@ -16843,10 +16843,15 @@ var import_sequelize3 = require("sequelize");
 var import_sequelize = require("sequelize");
 var import_dotenv = __toESM(require("dotenv"));
 import_dotenv.default.config();
-var sequelize = new import_sequelize.Sequelize("postgres", "postgres", "1234", {
-  host: "localhost",
-  dialect: "postgres"
-});
+var { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+var sequelize = new import_sequelize.Sequelize(
+  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
+  {
+    host: "0.0.0.0",
+    dialect: "postgres",
+    port: parseInt(process.env.PG_PORT)
+  }
+);
 
 // src/models/User.ts
 var import_sequelize2 = require("sequelize");
