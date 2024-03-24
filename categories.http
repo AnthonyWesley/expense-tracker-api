@@ -1,5 +1,5 @@
 
-POST https://expense-tracker-by-awl.netlify.app/register
+POST https://expense-tracker-api-qwnr.onrender.com/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-by-awl.netlify.app/login
+POST https://expense-tracker-api-qwnr.onrender.com/login
 Content-Type: application/json
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-by-awl.netlify.app/categories
+POST https://expense-tracker-api-qwnr.onrender.com/categories
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
 Content-Type: application/json
 
@@ -33,13 +33,13 @@ Content-Type: application/json
 ###
 
 
-GET  https://expense-tracker-by-awl.netlify.app/categories
+GET  https://expense-tracker-api-qwnr.onrender.com/categories
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
 
 ###
 
 
-PUT  https://expense-tracker-by-awl.netlify.app/category/0d6f17b8-7127-4f16-b146-00be806e1899
+PUT  https://expense-tracker-api-qwnr.onrender.com/category/0d6f17b8-7127-4f16-b146-00be806e1899
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
 Content-Type: application/json
 
@@ -51,7 +51,7 @@ Content-Type: application/json
 
 ###
 
-DELETE  https://expense-tracker-by-awl.netlify.app/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
+DELETE  https://expense-tracker-api-qwnr.onrender.com/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMmQyNDJhMi0xY2ZhLTQ4MmUtOWQ3ZS03MDA3NWY1ZmJiMzciLCJpYXQiOjE3MTA2MTE0MzksImV4cCI6MTcxMDYxNTAzOX0.WpkZ4xjU__TohG1HLQbwJuR2XPx9RSmSaRujSvLRLOE
 
 
