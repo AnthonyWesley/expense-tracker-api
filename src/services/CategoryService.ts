@@ -1,26 +1,21 @@
 import { User } from "../models/User";
-import { Category } from "../models/Category";
-
-type CategoryType = {
-  title: string;
-  color: string;
-  expense: boolean;
-};
+import { Category, CategoryInstance } from "../models/Category";
 
 class CategoryService {
-  async create(decodeId: number, { title, color, expense }: CategoryType) {
+  async create(decodeId: number, { title, color, expense }: CategoryInstance) {
     try {
       const user = await User.findOne({
         where: { id: decodeId },
       });
-      console.log(decodeId);
+      console.log("!!!!", decodeId);
+      console.log("!!!!", user);
 
       if (!user) {
         throw new Error("User not found for category creation");
       }
 
       // const existingCategory = await Category.findOne({
-      //   where: { userId: decodeId, title: title },
+      //   where: {  user_id: decodeId, title: title },
       // });
 
       // if (existingCategory) {
@@ -48,7 +43,7 @@ class CategoryService {
       }
 
       const categories = await Category.findAll({
-        where: { userId: decodeId },
+        where: { user_id: decodeId },
       });
 
       return categories;
@@ -61,11 +56,11 @@ class CategoryService {
   async update(
     paramsId: string,
     decodeId: number,
-    { title, color, expense }: CategoryType
+    { title, color, expense }: CategoryInstance
   ) {
     try {
       const existingCategory = await Category.findOne({
-        where: { userId: decodeId, id: paramsId },
+        where: { user_id: decodeId, id: paramsId },
       });
 
       if (!existingCategory) {
@@ -88,7 +83,7 @@ class CategoryService {
   async delete(paramsId: string, decodeId: number) {
     try {
       const existingCategory = await Category.findOne({
-        where: { userId: decodeId, id: paramsId },
+        where: { user_id: decodeId, id: paramsId },
       });
 
       if (!existingCategory) {
@@ -96,7 +91,7 @@ class CategoryService {
       }
 
       const deletedCategoriesCount = await Category.destroy({
-        where: { userId: decodeId, id: paramsId },
+        where: { user_id: decodeId, id: paramsId },
       });
 
       return deletedCategoriesCount;
