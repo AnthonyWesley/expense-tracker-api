@@ -26,7 +26,7 @@ class CategoryService {
         title,
         color,
         expense,
-        user_id: decodeId,
+        user_id: user.id,
       });
 
       return newCategory;
