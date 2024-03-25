@@ -39,7 +39,7 @@ export const Category = sequelize.define<CategoryInstance>(
         model: User,
         key: "id",
       },
-      field: "user_id", // Adiciona essa linha para especificar o nome correto da coluna
+      field: "user_id", // Especifica o nome correto da coluna
     },
     created_at: {
       type: DataTypes.DATE,
