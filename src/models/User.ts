@@ -33,13 +33,13 @@ export const User = sequelize.define<UserInstance>(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      field: "created_at",
+      // field: "created_at",
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      field: "updated_at",
+      // field: "updated_at",
     },
   },
   {

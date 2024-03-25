@@ -35,19 +35,16 @@ export const Category = sequelize.define(
     userId: {
       type: DataTypes.UUID,
       allowNull: false,
-      field: "user_id",
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      field: "created_at",
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      field: "updated_at",
     },
   },
   {
