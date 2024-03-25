@@ -30,7 +30,7 @@ class CategoryService {
         title,
         color,
         expense,
-        userId: decodeId,
+        user_id: decodeId,
       });
 
       return newCategory;

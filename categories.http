@@ -14,14 +14,14 @@ POST https://expense-tracker-api-qwnr.onrender.com/login
 Content-Type: application/json
 
 {
-    "email": "john@doe1.com",
+    "email": "john@doe.com",
     "password": "123"
 }
 
 ###
 
 POST https://expense-tracker-api-qwnr.onrender.com/categories
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjY1ZDlmOS02MzY2LTRmODUtOTBiMy0xOTQxMmJkMTZjNjciLCJpYXQiOjE3MTEzNzQ4NjgsImV4cCI6MTcxMTM3ODQ2OH0.PBRHrtjmvWnnz9vvuyC0rAQbxP4mGt3BglQnXmWZML4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
 Content-Type: application/json
 
 {
@@ -34,13 +34,13 @@ Content-Type: application/json
 
 
 GET  https://expense-tracker-api-qwnr.onrender.com/categories
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjY1ZDlmOS02MzY2LTRmODUtOTBiMy0xOTQxMmJkMTZjNjciLCJpYXQiOjE3MTEzNzQ4NjgsImV4cCI6MTcxMTM3ODQ2OH0.PBRHrtjmvWnnz9vvuyC0rAQbxP4mGt3BglQnXmWZML4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
 
 ###
 
 
 PUT  https://expense-tracker-api-qwnr.onrender.com/category/0d6f17b8-7127-4f16-b146-00be806e1899
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjY1ZDlmOS02MzY2LTRmODUtOTBiMy0xOTQxMmJkMTZjNjciLCJpYXQiOjE3MTEzNzQ4NjgsImV4cCI6MTcxMTM3ODQ2OH0.PBRHrtjmvWnnz9vvuyC0rAQbxP4mGt3BglQnXmWZML4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
 Content-Type: application/json
 
 {
@@ -52,7 +52,7 @@ Content-Type: application/json
 ###
 
 DELETE  https://expense-tracker-api-qwnr.onrender.com/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzYjY1ZDlmOS02MzY2LTRmODUtOTBiMy0xOTQxMmJkMTZjNjciLCJpYXQiOjE3MTEzNzQ4NjgsImV4cCI6MTcxMTM3ODQ2OH0.PBRHrtjmvWnnz9vvuyC0rAQbxP4mGt3BglQnXmWZML4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
 
 
 ###
