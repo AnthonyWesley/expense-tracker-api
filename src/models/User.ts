@@ -7,8 +7,8 @@ export interface UserInstance extends Model {
   name: string;
   email: string;
   password: string;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export const User = sequelize.define<UserInstance>(
@@ -29,17 +29,15 @@ export const User = sequelize.define<UserInstance>(
     name: {
       type: DataTypes.STRING,
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      // field: "created_at",
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-      // field: "updated_at",
     },
   },
   {
