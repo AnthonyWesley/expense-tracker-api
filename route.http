@@ -22,7 +22,7 @@ Content-Type: application/json
 
 
 POST http://localhost:3001/records
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhOThlYTg3YS02OWY0LTQ4ZWUtOGFhYS0zNDZjMDk4OTljYzciLCJpYXQiOjE3MTEzMzA2NzgsImV4cCI6MTcxMTMzNDI3OH0.ThqjTGiKuUynnu50lEjIwW-f7cJC-K995cWcFqnBM2s
 Content-Type: application/json
 
 {
@@ -38,20 +38,20 @@ Content-Type: application/json
 
 
 GET http://localhost:3001/records
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhOThlYTg3YS02OWY0LTQ4ZWUtOGFhYS0zNDZjMDk4OTljYzciLCJpYXQiOjE3MTEzMzA2NzgsImV4cCI6MTcxMTMzNDI3OH0.ThqjTGiKuUynnu50lEjIwW-f7cJC-K995cWcFqnBM2s
 
 ###
 
 
 DELETE http://localhost:3001/record/68e27cea-45b7-4011-b423-9268c46790ac
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhOThlYTg3YS02OWY0LTQ4ZWUtOGFhYS0zNDZjMDk4OTljYzciLCJpYXQiOjE3MTEzMzA2NzgsImV4cCI6MTcxMTMzNDI3OH0.ThqjTGiKuUynnu50lEjIwW-f7cJC-K995cWcFqnBM2s
 
 
 ###
 
 
 PUT http://localhost:3001/record/68e27cea-45b7-4011-b423-9268c46790ac
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhOThlYTg3YS02OWY0LTQ4ZWUtOGFhYS0zNDZjMDk4OTljYzciLCJpYXQiOjE3MTEzMzA2NzgsImV4cCI6MTcxMTMzNDI3OH0.ThqjTGiKuUynnu50lEjIwW-f7cJC-K995cWcFqnBM2s
 Content-Type: application/json
 
 {
@@ -74,7 +74,7 @@ Content-Type: application/json
 
 
 PUT http://localhost:3001/records/update
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxMTA0MTI0MSwiZXhwIjoxNzExMDQ0ODQxfQ.8hGBXk1sLK3MZ46oOrai20gi5rXL0XAFlufJuLR6Dp8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhOThlYTg3YS02OWY0LTQ4ZWUtOGFhYS0zNDZjMDk4OTljYzciLCJpYXQiOjE3MTEzMzA2NzgsImV4cCI6MTcxMTMzNDI3OH0.ThqjTGiKuUynnu50lEjIwW-f7cJC-K995cWcFqnBM2s
 Content-Type: application/json
 
 {

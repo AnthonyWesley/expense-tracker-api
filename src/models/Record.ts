@@ -38,7 +38,7 @@ export const Record = sequelize.define<RecordInstance>(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       field: "user_id",
     },

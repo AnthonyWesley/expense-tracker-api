@@ -35,7 +35,7 @@ export const decodeToken = (token: string) => {
   }
 };
 
-export const generateToken = (id: number, exp?: string | number) => {
+export const generateToken = (id: string, exp?: string | number) => {
   const secretKey = process.env.SECRET_KEY as string;
 
   try {

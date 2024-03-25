@@ -41,6 +41,7 @@ class UserController {
           message: "Invalid email or password",
         });
       }
+      console.log(user);
 
       const accessToken = generateToken(user.id);
       const refreshToken = generateToken(user.id, "7d");
@@ -63,7 +64,7 @@ class UserController {
     if (!refreshToken)
       res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
 
-    const decode = decodeToken(refreshToken) as { userId: number };
+    const decode = decodeToken(refreshToken) as { userId: string };
 
     const accessToken = generateToken(decode.userId);
 
