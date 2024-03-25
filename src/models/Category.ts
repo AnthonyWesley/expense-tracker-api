@@ -1,4 +1,4 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, UUIDV4 } from "sequelize";
 import { sequelize } from "../instances/pg";
 import { User } from "./User";
 
@@ -7,9 +7,9 @@ export interface CategoryInstance extends Model {
   title: string;
   color: string;
   expense?: boolean;
+  userId: string;
   createdAt?: Date;
   updatedAt?: Date;
-  userId: string;
 }
 
 export const Category = sequelize.define(
@@ -17,7 +17,7 @@ export const Category = sequelize.define(
   {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID,
+      defaultValue: UUIDV4,
       primaryKey: true,
     },
     title: {
@@ -32,6 +32,11 @@ export const Category = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: "user_id",
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -43,11 +48,6 @@ export const Category = sequelize.define(
       allowNull: false,
       defaultValue: DataTypes.NOW,
       field: "updated_at",
-    },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      field: "user_id",
     },
   },
   {
