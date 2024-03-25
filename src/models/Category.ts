@@ -12,7 +12,7 @@ export interface CategoryInstance extends Model {
   updated_at?: Date;
 }
 
-export const Category = sequelize.define(
+export const Category = sequelize.define<CategoryInstance>(
   "Category",
   {
     id: {
@@ -39,6 +39,7 @@ export const Category = sequelize.define(
         model: User,
         key: "id",
       },
+      field: "user_id", // Adiciona essa linha para especificar o nome correto da coluna
     },
     created_at: {
       type: DataTypes.DATE,

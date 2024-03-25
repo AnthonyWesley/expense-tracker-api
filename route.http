@@ -13,7 +13,7 @@ POST https://expense-tracker-api-qwnr.onrender.com/login
 Content-Type: application/json
 
 {
-    "email": "john@doe.com",
+    "email": "john@doe1.com",
     "password": "123"
 }
 
