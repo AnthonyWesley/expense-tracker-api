@@ -1,4 +1,4 @@
-POST http://localhost:3001/register
+POST https://expense-tracker-api-qwnr.onrender.com/register
 Content-Type: application/json
 
 {

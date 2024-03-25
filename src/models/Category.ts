@@ -7,9 +7,9 @@ export interface CategoryInstance extends Model {
   title: string;
   color: string;
   expense?: boolean;
-  userId: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  user_id: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export const Category = sequelize.define(
@@ -32,16 +32,20 @@ export const Category = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
     },
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
@@ -52,5 +56,5 @@ export const Category = sequelize.define(
   }
 );
 
-User.hasMany(Category, { foreignKey: "userId" });
-Category.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Category, { foreignKey: "user_id" });
+Category.belongsTo(User, { foreignKey: "user_id" });
