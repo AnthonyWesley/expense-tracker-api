@@ -13,6 +13,7 @@ class CategoryService {
       const user = await User.findOne({
         where: { id: decodeId },
       });
+      console.log(decodeId);
 
       if (!user) {
         throw new Error("User not found for category creation");

@@ -1,5 +1,5 @@
 
-POST https://expense-tracker-api-qwnr.onrender.com/register
+POST http://localhost:3001/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-api-qwnr.onrender.com/login
+POST http://localhost:3001/login
 Content-Type: application/json
 
 {
@@ -20,8 +20,8 @@ Content-Type: application/json
 
 ###
 
-POST https://expense-tracker-api-qwnr.onrender.com/categories
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
+POST http://localhost:3001/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmZGUwMTkwOC1hZmVkLTRiYTMtYmE4My00Y2RhODZlNzI3NDMiLCJpYXQiOjE3MTEzOTM2MjYsImV4cCI6MTcxMTM5NzIyNn0.TZAbOZxPWq9TUj2J53dQML3PZk86gbjdnBr5PCuqEoI
 Content-Type: application/json
 
 {
@@ -33,14 +33,14 @@ Content-Type: application/json
 ###
 
 
-GET  https://expense-tracker-api-qwnr.onrender.com/categories
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
+GET  http://localhost:3001/categories
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmZGUwMTkwOC1hZmVkLTRiYTMtYmE4My00Y2RhODZlNzI3NDMiLCJpYXQiOjE3MTEzOTM2MjYsImV4cCI6MTcxMTM5NzIyNn0.TZAbOZxPWq9TUj2J53dQML3PZk86gbjdnBr5PCuqEoI
 
 ###
 
 
-PUT  https://expense-tracker-api-qwnr.onrender.com/category/0d6f17b8-7127-4f16-b146-00be806e1899
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
+PUT  http://localhost:3001/category/0d6f17b8-7127-4f16-b146-00be806e1899
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmZGUwMTkwOC1hZmVkLTRiYTMtYmE4My00Y2RhODZlNzI3NDMiLCJpYXQiOjE3MTEzOTM2MjYsImV4cCI6MTcxMTM5NzIyNn0.TZAbOZxPWq9TUj2J53dQML3PZk86gbjdnBr5PCuqEoI
 Content-Type: application/json
 
 {
@@ -51,8 +51,8 @@ Content-Type: application/json
 
 ###
 
-DELETE  https://expense-tracker-api-qwnr.onrender.com/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkMzY4NGE3NS0zNGFkLTQ1NWItYTA2OC0xNmY0MDQ3YTRmMDUiLCJpYXQiOjE3MTEzOTA2MzMsImV4cCI6MTcxMTM5NDIzM30.lRsd8jFekoJjsOzZ_QZRnTGyWBSZuq_IF6G5ZSFO1lk
+DELETE  http://localhost:3001/category/0e476075-7ddd-4e5f-a4f6-db98f7a84164
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmZGUwMTkwOC1hZmVkLTRiYTMtYmE4My00Y2RhODZlNzI3NDMiLCJpYXQiOjE3MTEzOTM2MjYsImV4cCI6MTcxMTM5NzIyNn0.TZAbOZxPWq9TUj2J53dQML3PZk86gbjdnBr5PCuqEoI
 
 
 ###

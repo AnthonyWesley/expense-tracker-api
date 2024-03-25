@@ -9,8 +9,8 @@ export interface CategoryInstance extends Model {
   color: string;
   expense: boolean;
   user_id: string;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const Category = sequelize.define<CategoryInstance>(
@@ -42,15 +42,17 @@ export const Category = sequelize.define<CategoryInstance>(
       },
       field: "user_id",
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: "created_at",
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: "updated_at",
     },
   },
   {
