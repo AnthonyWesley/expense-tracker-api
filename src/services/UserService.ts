@@ -1,5 +1,6 @@
-import { User } from "../models/User";
 import bcrypt from "bcryptjs";
+import { User } from "../models/User";
+
 type UserType = {
   name?: string;
   email: string;

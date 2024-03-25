@@ -1,24 +1,25 @@
-import { DataTypes, Model, UUIDV4 } from "sequelize";
+// category.model.ts
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../instances/pg";
 import { User } from "./User";
 
 export interface CategoryInstance extends Model {
-  id?: string;
+  id: string;
   title: string;
   color: string;
-  expense?: boolean;
+  expense: boolean;
   user_id: string;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export const Category = sequelize.define<CategoryInstance>(
   "Category",
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: UUIDV4,
       primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     title: {
       type: DataTypes.STRING,
@@ -57,5 +58,4 @@ export const Category = sequelize.define<CategoryInstance>(
   }
 );
 
-User.hasMany(Category, { foreignKey: "user_id" });
-Category.belongsTo(User, { foreignKey: "user_id" });
+export default Category;
