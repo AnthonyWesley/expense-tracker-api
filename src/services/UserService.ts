@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { User } from "../models/User";
+import { prismaClient } from "../prisma";
 
 type UserType = {
   name?: string;
@@ -9,10 +9,12 @@ type UserType = {
 class UserService {
   async register({ name, email, password }: UserType) {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await prismaClient.user.findUnique({ where: { email } });
 
       if (!user) {
-        const createUser = await User.create({ name, email, password });
+        const createUser = await prismaClient.user.create({
+          data: { name: name ? name : "", email, password },
+        });
         return createUser;
       }
     } catch (error) {
@@ -22,7 +24,7 @@ class UserService {
   }
   async login({ email, password }: UserType) {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await prismaClient.user.findUnique({ where: { email } });
       if (user) {
         const decryptedPassword = await bcrypt.compare(password, user.password);
 

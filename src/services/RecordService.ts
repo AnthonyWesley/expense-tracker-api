@@ -1,5 +1,4 @@
-import { Record } from "../models/Record";
-import { User } from "../models/User";
+import { prismaClient } from "../prisma";
 
 type RecordType = {
   date: string;
@@ -9,22 +8,26 @@ type RecordType = {
 };
 class RecordService {
   async create(
-    decodeId: number,
+    decodeId: string,
     { date, value, description, category }: RecordType
   ) {
     try {
-      const user = await User.findOne({ where: { id: decodeId } });
+      const user = await prismaClient.user.findUnique({
+        where: { id: decodeId },
+      });
 
       if (!user) {
         throw new Error("User not found for record creation");
       }
 
-      const newRecord = await Record.create({
-        date,
-        value,
-        description,
-        category,
-        userId: decodeId,
+      const newRecord = await prismaClient.record.create({
+        data: {
+          date,
+          value,
+          description,
+          category,
+          userId: decodeId,
+        },
       });
 
       return newRecord;
@@ -34,13 +37,13 @@ class RecordService {
     }
   }
 
-  async read(decodeId: number) {
+  async read(decodeId: string) {
     try {
       if (decodeId == null) {
         throw new Error("Invalid user ID");
       }
 
-      const categories = await Record.findAll({
+      const categories = await prismaClient.record.findMany({
         where: { userId: decodeId },
       });
 
@@ -53,11 +56,11 @@ class RecordService {
 
   async update(
     paramsId: string,
-    decodeId: number,
+    decodeId: string,
     { date, value, description, category }: RecordType
   ) {
     try {
-      const existingRecord = await Record.findOne({
+      const existingRecord = await prismaClient.record.findUnique({
         where: { userId: decodeId, id: paramsId },
       });
 
@@ -65,11 +68,14 @@ class RecordService {
         throw new Error("Record not found");
       }
 
-      const updatedCategory = await existingRecord.update({
-        date,
-        value,
-        description,
-        category,
+      const updatedCategory = await prismaClient.record.update({
+        where: { id: paramsId },
+        data: {
+          date,
+          value,
+          description,
+          category,
+        },
       });
 
       return updatedCategory;
@@ -79,9 +85,9 @@ class RecordService {
     }
   }
 
-  async delete(paramsId: string, decodeId: number) {
+  async delete(paramsId: string, decodeId: string) {
     try {
-      const existingRecord = await Record.findOne({
+      const existingRecord = await prismaClient.record.findUnique({
         where: { userId: decodeId, id: paramsId },
       });
 
@@ -89,7 +95,7 @@ class RecordService {
         throw new Error("Record not found");
       }
 
-      const deletedCategoriesCount = await Record.destroy({
+      const deletedCategoriesCount = await prismaClient.record.delete({
         where: { userId: decodeId, id: paramsId },
       });
 
@@ -101,11 +107,13 @@ class RecordService {
   }
 
   async updateManyTitles(currentName: string, updateName: string) {
+    console.log(currentName, updateName);
+
     try {
-      const findRecords = await Record.update(
-        { category: updateName.toUpperCase().trim() },
-        { where: { category: currentName.toUpperCase().trim() } }
-      );
+      const findRecords = await prismaClient.record.updateMany({
+        where: { category: currentName.toUpperCase().trim() },
+        data: { category: updateName.toUpperCase().trim() },
+      });
 
       if (!findRecords) {
         throw new Error("Registers not found");

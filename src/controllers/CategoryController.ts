@@ -12,7 +12,8 @@ class CategoryController {
     try {
       const { title, color, expense } = req.body as CategoryType;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
+      console.log(decode);
 
       if (decode && decode.userId) {
         const categories = await categoryService.create(decode.userId, {
@@ -35,7 +36,7 @@ class CategoryController {
   async read(req: Request, res: Response) {
     try {
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const categories = await categoryService.read(decode.userId);
@@ -56,7 +57,7 @@ class CategoryController {
       const { title, color, expense } = req.body as CategoryType;
       const { id } = req.params;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const categories = await categoryService.update(id, decode.userId, {
@@ -80,7 +81,7 @@ class CategoryController {
     try {
       const { id } = req.params;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const deletedCategory = await categoryService.delete(id, decode.userId);

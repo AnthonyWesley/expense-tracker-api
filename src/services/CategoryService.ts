@@ -1,32 +1,38 @@
-import { User } from "../models/User";
-import { Category, CategoryInstance } from "../models/Category";
+import { prismaClient } from "../prisma";
+
+export interface CategoryInstance {
+  id?: string;
+  title: string;
+  color: string;
+  expense: boolean;
+}
 
 class CategoryService {
-  async create(decodeId: number, { title, color, expense }: CategoryInstance) {
+  async create(decodeId: string, { title, color, expense }: CategoryInstance) {
     try {
-      const user = await User.findOne({
+      const user = await prismaClient.user.findUnique({
         where: { id: decodeId },
       });
-      console.log("!!!!", decodeId);
-      console.log("!!!!", user);
 
       if (!user) {
         throw new Error("User not found for category creation");
       }
 
-      // const existingCategory = await Category.findOne({
-      //   where: {  user_id: decodeId, title: title },
+      // const existingCategory = await prismaClient.category.findUnique({
+      //   where: {  userId: decodeId, title: title },
       // });
 
       // if (existingCategory) {
       //   throw new Error("Category with the same title already exists");
       // }
 
-      const newCategory = await Category.create({
-        title,
-        color,
-        expense,
-        user_id: user.id,
+      const newCategory = await prismaClient.category.create({
+        data: {
+          title,
+          color,
+          expense,
+          userId: decodeId,
+        },
       });
 
       return newCategory;
@@ -36,14 +42,14 @@ class CategoryService {
     }
   }
 
-  async read(decodeId: number) {
+  async read(decodeId: string) {
     try {
       if (decodeId == null) {
         throw new Error("Invalid user ID");
       }
 
-      const categories = await Category.findAll({
-        where: { user_id: decodeId },
+      const categories = await prismaClient.category.findMany({
+        where: { userId: decodeId },
       });
 
       return categories;
@@ -55,22 +61,25 @@ class CategoryService {
 
   async update(
     paramsId: string,
-    decodeId: number,
+    decodeId: string,
     { title, color, expense }: CategoryInstance
   ) {
     try {
-      const existingCategory = await Category.findOne({
-        where: { user_id: decodeId, id: paramsId },
+      const existingCategory = await prismaClient.category.findUnique({
+        where: { userId: decodeId, id: paramsId },
       });
 
       if (!existingCategory) {
         throw new Error("Category not found");
       }
 
-      const updatedCategory = await existingCategory.update({
-        title,
-        color,
-        expense,
+      const updatedCategory = await prismaClient.category.update({
+        where: { id: paramsId },
+        data: {
+          title,
+          color,
+          expense,
+        },
       });
 
       return updatedCategory;
@@ -80,18 +89,18 @@ class CategoryService {
     }
   }
 
-  async delete(paramsId: string, decodeId: number) {
+  async delete(paramsId: string, decodeId: string) {
     try {
-      const existingCategory = await Category.findOne({
-        where: { user_id: decodeId, id: paramsId },
+      const existingCategory = await prismaClient.category.findUnique({
+        where: { userId: decodeId, id: paramsId },
       });
 
       if (!existingCategory) {
         throw new Error("Category not found");
       }
 
-      const deletedCategoriesCount = await Category.destroy({
-        where: { user_id: decodeId, id: paramsId },
+      const deletedCategoriesCount = await prismaClient.category.delete({
+        where: { userId: decodeId, id: paramsId },
       });
 
       return deletedCategoriesCount;

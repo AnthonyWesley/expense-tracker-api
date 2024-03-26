@@ -41,7 +41,6 @@ class UserController {
           message: "Invalid email or password",
         });
       }
-      console.log(user);
 
       const accessToken = generateToken(user.id);
       const refreshToken = generateToken(user.id, "7d");

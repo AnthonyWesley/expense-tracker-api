@@ -27,15 +27,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/services/UserService.ts
-var UserService_exports = {};
-__export(UserService_exports, {
-  userService: () => userService
-});
-module.exports = __toCommonJS(UserService_exports);
-var import_bcryptjs2 = __toESM(require("bcryptjs"));
-
 // src/prisma/index.ts
+var prisma_exports = {};
+__export(prisma_exports, {
+  prismaClient: () => prismaClient
+});
+module.exports = __toCommonJS(prisma_exports);
 var import_client = require("@prisma/client");
 var import_bcryptjs = __toESM(require("bcryptjs"));
 var prismaClient = new import_client.PrismaClient();
@@ -46,40 +43,7 @@ prismaClient.$use(async (params, next) => {
   }
   return next(params);
 });
-
-// src/services/UserService.ts
-var UserService = class {
-  async register({ name, email, password }) {
-    try {
-      const user = await prismaClient.user.findUnique({ where: { email } });
-      if (!user) {
-        const createUser = await prismaClient.user.create({
-          data: { name: name ? name : "", email, password }
-        });
-        return createUser;
-      }
-    } catch (error) {
-      console.error("Error in user creation:", error);
-      throw new Error("Failed to create user");
-    }
-  }
-  async login({ email, password }) {
-    try {
-      const user = await prismaClient.user.findUnique({ where: { email } });
-      if (user) {
-        const decryptedPassword = await import_bcryptjs2.default.compare(password, user.password);
-        if (decryptedPassword) {
-          return user;
-        }
-      }
-    } catch (error) {
-      console.error("Error in user login:", error);
-      throw new Error("Failed to login user");
-    }
-  }
-};
-var userService = new UserService();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  userService
+  prismaClient
 });

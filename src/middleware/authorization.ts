@@ -39,7 +39,7 @@ export const generateToken = (id: string, exp?: string | number) => {
   const secretKey = process.env.SECRET_KEY as string;
 
   try {
-    const token = jwt.sign({ user_id: id }, secretKey, {
+    const token = jwt.sign({ userId: id }, secretKey, {
       expiresIn: exp ? exp : "1h",
     });
 

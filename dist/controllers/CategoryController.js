@@ -45,124 +45,35 @@ var decodeToken = (token) => {
   }
 };
 
-// src/models/User.ts
-var import_sequelize2 = require("sequelize");
-
-// src/instances/pg.ts
-var import_sequelize = require("sequelize");
-var import_dotenv = __toESM(require("dotenv"));
-import_dotenv.default.config();
-var { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-var sequelize = new import_sequelize.Sequelize(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
-  {
-    host: "0.0.0.0",
-    dialect: "postgres",
-    port: parseInt(process.env.PG_PORT)
-  }
-);
-
-// src/models/User.ts
+// src/prisma/index.ts
+var import_client = require("@prisma/client");
 var import_bcryptjs = __toESM(require("bcryptjs"));
-var User = sequelize.define(
-  "User",
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: import_sequelize2.DataTypes.INTEGER
-    },
-    email: {
-      type: import_sequelize2.DataTypes.STRING,
-      unique: true
-    },
-    password: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    name: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    createdAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "updated_at"
-    }
-  },
-  {
-    tableName: "users",
-    hooks: {
-      beforeCreate: async (user) => {
-        const hashedPassword = await import_bcryptjs.default.hash(user.password, 10);
-        user.password = hashedPassword;
-      }
-    }
+var prismaClient = new import_client.PrismaClient();
+prismaClient.$use(async (params, next) => {
+  if (params.action === "create" && params.model === "User") {
+    const hashedPassword = await import_bcryptjs.default.hash(params.args.data.password, 10);
+    params.args.data.password = hashedPassword;
   }
-);
-
-// src/models/Category.ts
-var import_sequelize3 = require("sequelize");
-var Category = sequelize.define(
-  "Category",
-  {
-    id: {
-      type: import_sequelize3.DataTypes.UUID,
-      defaultValue: import_sequelize3.UUIDV4,
-      primaryKey: true
-    },
-    title: {
-      type: import_sequelize3.DataTypes.STRING,
-      allowNull: false
-    },
-    color: {
-      type: import_sequelize3.DataTypes.STRING,
-      allowNull: false
-    },
-    expense: {
-      type: import_sequelize3.DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    createdAt: {
-      type: import_sequelize3.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize3.DataTypes.NOW,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: import_sequelize3.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize3.DataTypes.NOW,
-      field: "updated_at"
-    }
-  },
-  {
-    tableName: "categories"
-  }
-);
-User.hasMany(Category, { foreignKey: "userId" });
-Category.belongsTo(User, { foreignKey: "userId" });
+  return next(params);
+});
 
 // src/services/CategoryService.ts
 var CategoryService = class {
   async create(decodeId, { title, color, expense }) {
     try {
-      const user = await User.findOne({
+      const user = await prismaClient.user.findUnique({
         where: { id: decodeId }
       });
       if (!user) {
         throw new Error("User not found for category creation");
       }
-      const newCategory = await Category.create({
-        title,
-        color,
-        expense,
-        userId: decodeId
+      const newCategory = await prismaClient.category.create({
+        data: {
+          title,
+          color,
+          expense,
+          userId: decodeId
+        }
       });
       return newCategory;
     } catch (error) {
@@ -175,7 +86,7 @@ var CategoryService = class {
       if (decodeId == null) {
         throw new Error("Invalid user ID");
       }
-      const categories = await Category.findAll({
+      const categories = await prismaClient.category.findMany({
         where: { userId: decodeId }
       });
       return categories;
@@ -186,16 +97,19 @@ var CategoryService = class {
   }
   async update(paramsId, decodeId, { title, color, expense }) {
     try {
-      const existingCategory = await Category.findOne({
+      const existingCategory = await prismaClient.category.findUnique({
         where: { userId: decodeId, id: paramsId }
       });
       if (!existingCategory) {
         throw new Error("Category not found");
       }
-      const updatedCategory = await existingCategory.update({
-        title,
-        color,
-        expense
+      const updatedCategory = await prismaClient.category.update({
+        where: { id: paramsId },
+        data: {
+          title,
+          color,
+          expense
+        }
       });
       return updatedCategory;
     } catch (error) {
@@ -205,13 +119,13 @@ var CategoryService = class {
   }
   async delete(paramsId, decodeId) {
     try {
-      const existingCategory = await Category.findOne({
+      const existingCategory = await prismaClient.category.findUnique({
         where: { userId: decodeId, id: paramsId }
       });
       if (!existingCategory) {
         throw new Error("Category not found");
       }
-      const deletedCategoriesCount = await Category.destroy({
+      const deletedCategoriesCount = await prismaClient.category.delete({
         where: { userId: decodeId, id: paramsId }
       });
       return deletedCategoriesCount;
@@ -230,6 +144,7 @@ var CategoryController = class {
       const { title, color, expense } = req.body;
       const token = req.headers.authorization;
       const decode = decodeToken(token);
+      console.log(decode);
       if (decode && decode.userId) {
         const categories = await categoryService.create(decode.userId, {
           title: title.toUpperCase(),

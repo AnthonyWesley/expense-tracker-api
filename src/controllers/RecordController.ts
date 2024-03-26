@@ -13,7 +13,7 @@ class RecordController {
     try {
       const { date, value, description, category } = req.body as RecordType;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const newRecord = await recordService.create(decode.userId, {
@@ -39,7 +39,7 @@ class RecordController {
   async read(req: Request, res: Response) {
     try {
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const records = await recordService.read(decode.userId);
@@ -60,7 +60,7 @@ class RecordController {
       const { date, value, description, category } = req.body as RecordType;
       const { id } = req.params;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const records = await recordService.update(id, decode.userId, {
@@ -85,7 +85,7 @@ class RecordController {
     try {
       const { id } = req.params;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const deletedRecord = await recordService.delete(id, decode.userId);
@@ -117,7 +117,7 @@ class RecordController {
       };
       // const { id } = req.params;
       const token = req.headers.authorization as string;
-      const decode = decodeToken(token) as { userId: number };
+      const decode = decodeToken(token) as { userId: string };
 
       if (decode && decode.userId) {
         const categories = await recordService.updateManyTitles(

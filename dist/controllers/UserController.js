@@ -56,75 +56,30 @@ var generateToken = (id, exp) => {
   }
 };
 
-// src/models/User.ts
-var import_sequelize2 = require("sequelize");
-
-// src/instances/pg.ts
-var import_sequelize = require("sequelize");
-var import_dotenv = __toESM(require("dotenv"));
-import_dotenv.default.config();
-var { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-var sequelize = new import_sequelize.Sequelize(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
-  {
-    host: "0.0.0.0",
-    dialect: "postgres",
-    port: parseInt(process.env.PG_PORT)
-  }
-);
-
-// src/models/User.ts
-var import_bcryptjs = __toESM(require("bcryptjs"));
-var User = sequelize.define(
-  "User",
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: import_sequelize2.DataTypes.INTEGER
-    },
-    email: {
-      type: import_sequelize2.DataTypes.STRING,
-      unique: true
-    },
-    password: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    name: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    createdAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "updated_at"
-    }
-  },
-  {
-    tableName: "users",
-    hooks: {
-      beforeCreate: async (user) => {
-        const hashedPassword = await import_bcryptjs.default.hash(user.password, 10);
-        user.password = hashedPassword;
-      }
-    }
-  }
-);
-
 // src/services/UserService.ts
 var import_bcryptjs2 = __toESM(require("bcryptjs"));
+
+// src/prisma/index.ts
+var import_client = require("@prisma/client");
+var import_bcryptjs = __toESM(require("bcryptjs"));
+var prismaClient = new import_client.PrismaClient();
+prismaClient.$use(async (params, next) => {
+  if (params.action === "create" && params.model === "User") {
+    const hashedPassword = await import_bcryptjs.default.hash(params.args.data.password, 10);
+    params.args.data.password = hashedPassword;
+  }
+  return next(params);
+});
+
+// src/services/UserService.ts
 var UserService = class {
   async register({ name, email, password }) {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await prismaClient.user.findUnique({ where: { email } });
       if (!user) {
-        const createUser = await User.create({ name, email, password });
+        const createUser = await prismaClient.user.create({
+          data: { name: name ? name : "", email, password }
+        });
         return createUser;
       }
     } catch (error) {
@@ -134,7 +89,7 @@ var UserService = class {
   }
   async login({ email, password }) {
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await prismaClient.user.findUnique({ where: { email } });
       if (user) {
         const decryptedPassword = await import_bcryptjs2.default.compare(password, user.password);
         if (decryptedPassword) {

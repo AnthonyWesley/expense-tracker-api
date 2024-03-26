@@ -45,132 +45,36 @@ var decodeToken = (token) => {
   }
 };
 
-// src/models/Record.ts
-var import_sequelize3 = require("sequelize");
-
-// src/instances/pg.ts
-var import_sequelize = require("sequelize");
-var import_dotenv = __toESM(require("dotenv"));
-import_dotenv.default.config();
-var { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-var sequelize = new import_sequelize.Sequelize(
-  `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`,
-  {
-    host: "0.0.0.0",
-    dialect: "postgres",
-    port: parseInt(process.env.PG_PORT)
-  }
-);
-
-// src/models/User.ts
-var import_sequelize2 = require("sequelize");
+// src/prisma/index.ts
+var import_client = require("@prisma/client");
 var import_bcryptjs = __toESM(require("bcryptjs"));
-var User = sequelize.define(
-  "User",
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: import_sequelize2.DataTypes.INTEGER
-    },
-    email: {
-      type: import_sequelize2.DataTypes.STRING,
-      unique: true
-    },
-    password: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    name: {
-      type: import_sequelize2.DataTypes.STRING
-    },
-    createdAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: import_sequelize2.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize2.DataTypes.NOW,
-      field: "updated_at"
-    }
-  },
-  {
-    tableName: "users",
-    hooks: {
-      beforeCreate: async (user) => {
-        const hashedPassword = await import_bcryptjs.default.hash(user.password, 10);
-        user.password = hashedPassword;
-      }
-    }
+var prismaClient = new import_client.PrismaClient();
+prismaClient.$use(async (params, next) => {
+  if (params.action === "create" && params.model === "User") {
+    const hashedPassword = await import_bcryptjs.default.hash(params.args.data.password, 10);
+    params.args.data.password = hashedPassword;
   }
-);
-
-// src/models/Record.ts
-var Record = sequelize.define(
-  "Record",
-  {
-    id: {
-      type: import_sequelize3.DataTypes.UUID,
-      defaultValue: import_sequelize3.UUIDV4,
-      primaryKey: true
-    },
-    date: {
-      type: import_sequelize3.DataTypes.DATE,
-      allowNull: false
-    },
-    value: {
-      type: import_sequelize3.DataTypes.FLOAT,
-      allowNull: false
-    },
-    category: {
-      type: import_sequelize3.DataTypes.STRING,
-      allowNull: false
-    },
-    description: {
-      type: import_sequelize3.DataTypes.STRING,
-      allowNull: false
-    },
-    userId: {
-      type: import_sequelize3.DataTypes.INTEGER,
-      allowNull: false,
-      field: "user_id"
-    },
-    createdAt: {
-      type: import_sequelize3.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize3.DataTypes.NOW,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: import_sequelize3.DataTypes.DATE,
-      allowNull: false,
-      defaultValue: import_sequelize3.DataTypes.NOW,
-      field: "updated_at"
-    }
-  },
-  {
-    tableName: "records"
-  }
-);
-User.hasMany(Record, { foreignKey: "userId" });
-Record.belongsTo(User, { foreignKey: "userId" });
+  return next(params);
+});
 
 // src/services/RecordService.ts
 var RecordService = class {
   async create(decodeId, { date, value, description, category }) {
     try {
-      const user = await User.findOne({ where: { id: decodeId } });
+      const user = await prismaClient.user.findUnique({
+        where: { id: decodeId }
+      });
       if (!user) {
         throw new Error("User not found for record creation");
       }
-      const newRecord = await Record.create({
-        date,
-        value,
-        description,
-        category,
-        userId: decodeId
+      const newRecord = await prismaClient.record.create({
+        data: {
+          date,
+          value,
+          description,
+          category,
+          userId: decodeId
+        }
       });
       return newRecord;
     } catch (error) {
@@ -183,7 +87,7 @@ var RecordService = class {
       if (decodeId == null) {
         throw new Error("Invalid user ID");
       }
-      const categories = await Record.findAll({
+      const categories = await prismaClient.record.findMany({
         where: { userId: decodeId }
       });
       return categories;
@@ -194,17 +98,20 @@ var RecordService = class {
   }
   async update(paramsId, decodeId, { date, value, description, category }) {
     try {
-      const existingRecord = await Record.findOne({
+      const existingRecord = await prismaClient.record.findUnique({
         where: { userId: decodeId, id: paramsId }
       });
       if (!existingRecord) {
         throw new Error("Record not found");
       }
-      const updatedCategory = await existingRecord.update({
-        date,
-        value,
-        description,
-        category
+      const updatedCategory = await prismaClient.record.update({
+        where: { id: paramsId },
+        data: {
+          date,
+          value,
+          description,
+          category
+        }
       });
       return updatedCategory;
     } catch (error) {
@@ -214,13 +121,13 @@ var RecordService = class {
   }
   async delete(paramsId, decodeId) {
     try {
-      const existingRecord = await Record.findOne({
+      const existingRecord = await prismaClient.record.findUnique({
         where: { userId: decodeId, id: paramsId }
       });
       if (!existingRecord) {
         throw new Error("Record not found");
       }
-      const deletedCategoriesCount = await Record.destroy({
+      const deletedCategoriesCount = await prismaClient.record.delete({
         where: { userId: decodeId, id: paramsId }
       });
       return deletedCategoriesCount;
@@ -230,11 +137,12 @@ var RecordService = class {
     }
   }
   async updateManyTitles(currentName, updateName) {
+    console.log(currentName, updateName);
     try {
-      const findRecords = await Record.update(
-        { category: updateName.toUpperCase().trim() },
-        { where: { category: currentName.toUpperCase().trim() } }
-      );
+      const findRecords = await prismaClient.record.updateMany({
+        where: { category: currentName.toUpperCase().trim() },
+        data: { category: updateName.toUpperCase().trim() }
+      });
       if (!findRecords) {
         throw new Error("Registers not found");
       }
