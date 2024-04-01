@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src",
-    "start": "node dist/server.js"
+    "build": "prisma generate && tsup src",
+    "start": "node dist/server.js",
+    "vercel-build": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
