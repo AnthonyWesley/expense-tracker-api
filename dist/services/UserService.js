@@ -48,14 +48,39 @@ prismaClient.$use(async (params, next) => {
 });
 
 // src/services/UserService.ts
+var import_ulid = require("ulid");
 var UserService = class {
   async register({ name, email, password }) {
+    console.log(name, email, password);
     try {
       const user = await prismaClient.user.findUnique({ where: { email } });
+      console.log("User findUnique result:", user);
       if (!user) {
         const createUser = await prismaClient.user.create({
-          data: { name: name ? name : "", email, password }
+          data: { id: (0, import_ulid.ulid)(), name: name || "", email, password }
         });
+        console.log("User created:", createUser);
+        const category = await prismaClient.category.create({
+          data: {
+            id: (0, import_ulid.ulid)(),
+            name: "MERCADO",
+            color: "red",
+            expense: true,
+            user_id: createUser.id
+          }
+        });
+        console.log("Category created:", category);
+        const account = await prismaClient.account.create({
+          data: {
+            id: (0, import_ulid.ulid)(),
+            name: "CONTA PRINCIPAL",
+            number: "012345-6",
+            branch: "012",
+            type: "Corrente",
+            user_id: createUser.id
+          }
+        });
+        console.log("Account created:", account);
         return createUser;
       }
     } catch (error) {
@@ -65,7 +90,16 @@ var UserService = class {
   }
   async login({ email, password }) {
     try {
-      const user = await prismaClient.user.findUnique({ where: { email } });
+      const user = await prismaClient.user.findUnique({
+        where: { email }
+        // include: {
+        //   accounts: {
+        //     include: {
+        //       records: true,
+        //     },
+        //   },
+        // },
+      });
       if (user) {
         const decryptedPassword = await import_bcryptjs2.default.compare(password, user.password);
         if (decryptedPassword) {

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,45 +8,60 @@ datasource db {
 }
 
 model User {
-  id         String    @default(uuid()) @unique
+  id         String     @id @default(dbgenerated()) @unique
   name       String
-  email      String    @unique
+  email      String     @unique
   password   String 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt()
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   categories Category[]
-  records Record[]
+  accounts   Account[]
 
   @@map("users")
 }
 
 model Category {
-  id        String   @id @default(uuid()) 
-  title     String   
-  color     String   
-  expense   Boolean   
-  created_at DateTime @default(now()) 
-  updated_at DateTime @updatedAt 
+  id         String     @id @default(uuid()) 
+  name       String   
+  color      String   
+  expense    Boolean   
+  created_at DateTime   @default(now()) 
+  updated_at DateTime   @updatedAt
 
-
-  user      User      @relation(fields: [userId], references: [id])
-  userId    String  
+  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String  
 
   @@map("categories")
 }
 
+model Account {
+  id         String     @id @default(uuid()) 
+  name       String 
+  number     String?   
+  branch     String?
+  type       String?
+  created_at DateTime   @default(now()) 
+  updated_at DateTime   @updatedAt
+
+  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String  
+
+  records    Record[]
+
+  @@map("accounts")
+}
+
 model Record {
-  id          String   @id @default(uuid()) 
+  id          String    @id @default(uuid()) 
   date        DateTime 
   value       Float    
   description String   
   category    String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt 
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 
- 
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String  
+  account     Account   @relation(fields: [account_id], references: [id], onDelete: Cascade)
+  account_id   String  
 
   @@map("records")
 }
