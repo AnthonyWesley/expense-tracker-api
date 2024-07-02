@@ -16796,8 +16796,13 @@ var require_body_parser = __commonJS({
 });
 
 // src/server.ts
+<<<<<<< HEAD
 var import_cors = __toESM(require("cors"));
 var import_dotenv = __toESM(require("dotenv"));
+=======
+var import_express2 = __toESM(require("express"));
+var import_cors = __toESM(require("cors"));
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
 
 // src/route/expensesRoutes.ts
 var import_express = require("express");
@@ -17129,7 +17134,11 @@ var ApiService = class {
           throw new Error(`User not found for ${this.entityName} creation`);
         }
         const newData = await this.prismaInstance.create({
+<<<<<<< HEAD
           data: { ...data, id: (0, import_ulid2.ulid)(), user_id: decodeId }
+=======
+          data: { ...data, id: (0, import_ulid2.ulid)(), userId: decodeId }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         return newData;
       }
@@ -17145,19 +17154,32 @@ var ApiService = class {
       }
       if ("id" in paramsId) {
         const newData2 = await this.prismaInstance.findMany({
+<<<<<<< HEAD
           where: { user_id: decodeId },
           include: { records: { where: { account_id: paramsId.id } } }
+=======
+          where: { userId: decodeId },
+          include: { records: { where: { accountId: paramsId.id } } }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         const data = newData2.filter((item) => item.id == paramsId.id);
         return data[0].records;
       } else {
         const data = await this.prismaInstance.findMany({
+<<<<<<< HEAD
           where: { user_id: decodeId }
+=======
+          where: { userId: decodeId }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         if (data.length > 0) {
           if ("branch" in data[0]) {
             const data2 = await this.prismaInstance.findMany({
+<<<<<<< HEAD
               where: { user_id: decodeId },
+=======
+              where: { userId: decodeId },
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
               include: { records: true }
             });
             return data2;
@@ -17180,7 +17202,11 @@ var ApiService = class {
         return newData;
       } else {
         const findDate = await this.prismaInstance.findUnique({
+<<<<<<< HEAD
           where: { user_id: decodeId, id: paramsId }
+=======
+          where: { userId: decodeId, id: paramsId }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         if (!findDate) {
           throw new Error(`${this.entityName} not found`);
@@ -17205,13 +17231,21 @@ var ApiService = class {
         return findDate;
       } else {
         const newData = await this.prismaInstance.findUnique({
+<<<<<<< HEAD
           where: { user_id: decodeId, id: paramsId }
+=======
+          where: { userId: decodeId, id: paramsId }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         if (!newData) {
           throw new Error(`${this.entityName} not found`);
         }
         const findDate = await this.prismaInstance.delete({
+<<<<<<< HEAD
           where: { user_id: decodeId, id: paramsId }
+=======
+          where: { userId: decodeId, id: paramsId }
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
         });
         return findDate;
       }
@@ -17331,8 +17365,11 @@ var record = new ApiRouter(
 var expensesRoutes_default = router;
 
 // src/server.ts
+<<<<<<< HEAD
 var import_express2 = __toESM(require("express"));
 import_dotenv.default.config();
+=======
+>>>>>>> a470cc9e6d3fa0a2a0a01362f61ca029a68db87d
 var server = (0, import_express2.default)();
 var port = 3001;
 server.use((0, import_cors.default)({ origin: "*" }));
