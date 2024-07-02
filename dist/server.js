@@ -16796,7 +16796,8 @@ var require_body_parser = __commonJS({
 });
 
 // src/server.ts
-var import_express2 = __toESM(require("express"));
+var import_cors = __toESM(require("cors"));
+var import_dotenv = __toESM(require("dotenv"));
 
 // src/route/expensesRoutes.ts
 var import_express = require("express");
@@ -16836,6 +16837,9 @@ var generateToken = (id, exp) => {
   }
 };
 
+// src/services/UserService.ts
+var import_bcryptjs2 = __toESM(require("bcryptjs"));
+
 // src/prisma/index.ts
 var import_client = require("@prisma/client");
 var import_bcryptjs = __toESM(require("bcryptjs"));
@@ -16848,369 +16852,40 @@ prismaClient.$use(async (params, next) => {
   return next(params);
 });
 
-// src/services/RecordService.ts
-var RecordService = class {
-  async create(decodeId, { date, value, description, category }) {
-    try {
-      const user = await prismaClient.user.findUnique({
-        where: { id: decodeId }
-      });
-      if (!user) {
-        throw new Error("User not found for record creation");
-      }
-      const newRecord = await prismaClient.record.create({
-        data: {
-          date,
-          value,
-          description,
-          category,
-          userId: decodeId
-        }
-      });
-      return newRecord;
-    } catch (error) {
-      console.error("Error in record creation:", error);
-      throw new Error("Failed to create record");
-    }
-  }
-  async read(decodeId) {
-    try {
-      if (decodeId == null) {
-        throw new Error("Invalid user ID");
-      }
-      const categories = await prismaClient.record.findMany({
-        where: { userId: decodeId }
-      });
-      return categories;
-    } catch (error) {
-      console.error("Error in reading categories:", error);
-      throw new Error("Failed to read categories");
-    }
-  }
-  async update(paramsId, decodeId, { date, value, description, category }) {
-    try {
-      const existingRecord = await prismaClient.record.findUnique({
-        where: { userId: decodeId, id: paramsId }
-      });
-      if (!existingRecord) {
-        throw new Error("Record not found");
-      }
-      const updatedCategory = await prismaClient.record.update({
-        where: { id: paramsId },
-        data: {
-          date,
-          value,
-          description,
-          category
-        }
-      });
-      return updatedCategory;
-    } catch (error) {
-      console.error("Error in updating category:", error);
-      throw new Error("Failed to update category");
-    }
-  }
-  async delete(paramsId, decodeId) {
-    try {
-      const existingRecord = await prismaClient.record.findUnique({
-        where: { userId: decodeId, id: paramsId }
-      });
-      if (!existingRecord) {
-        throw new Error("Record not found");
-      }
-      const deletedCategoriesCount = await prismaClient.record.delete({
-        where: { userId: decodeId, id: paramsId }
-      });
-      return deletedCategoriesCount;
-    } catch (error) {
-      console.error("Error in deleting category:", error);
-      throw new Error("Failed to delete category");
-    }
-  }
-  async updateManyTitles(currentName, updateName) {
-    console.log(currentName, updateName);
-    try {
-      const findRecords = await prismaClient.record.updateMany({
-        where: { category: currentName.toUpperCase().trim() },
-        data: { category: updateName.toUpperCase().trim() }
-      });
-      if (!findRecords) {
-        throw new Error("Registers not found");
-      }
-      return findRecords;
-    } catch (error) {
-      console.error("Error in updating category:", error);
-      throw new Error("Failed to update category");
-    }
-  }
-};
-var recordService = new RecordService();
-
-// src/controllers/RecordController.ts
-var RecordController = class {
-  async create(req, res) {
-    try {
-      const { date, value, description, category } = req.body;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const newRecord = await recordService.create(decode.userId, {
-          date,
-          value,
-          description,
-          category
-        });
-        return res.status(201).json({ success: true, data: { record: newRecord } });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async read(req, res) {
-    try {
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const records = await recordService.read(decode.userId);
-        return res.status(201).json({ success: true, records });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async update(req, res) {
-    try {
-      const { date, value, description, category } = req.body;
-      const { id } = req.params;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const records = await recordService.update(id, decode.userId, {
-          date,
-          value,
-          description,
-          category
-        });
-        return res.status(201).json({ success: true, records });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async delete(req, res) {
-    try {
-      const { id } = req.params;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const deletedRecord = await recordService.delete(id, decode.userId);
-        if (deletedRecord) {
-          return res.status(200).json({ success: true, message: `Record ID - ${id} - DELETED` });
-        } else {
-          return res.status(404).json({ error: "Not Found", message: "Record doesn't exist" });
-        }
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async updateManyTitles(req, res) {
-    try {
-      const { currentName, updateName } = req.body;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const categories = await recordService.updateManyTitles(
-          currentName,
-          updateName
-        );
-        return res.status(201).json({ success: true, categories });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-};
-var recordController = new RecordController();
-
-// src/services/CategoryService.ts
-var CategoryService = class {
-  async create(decodeId, { title, color, expense }) {
-    try {
-      const user = await prismaClient.user.findUnique({
-        where: { id: decodeId }
-      });
-      if (!user) {
-        throw new Error("User not found for category creation");
-      }
-      const newCategory = await prismaClient.category.create({
-        data: {
-          title,
-          color,
-          expense,
-          userId: decodeId
-        }
-      });
-      return newCategory;
-    } catch (error) {
-      console.error("Error in category creation:", error);
-      throw new Error("Failed to create category");
-    }
-  }
-  async read(decodeId) {
-    try {
-      if (decodeId == null) {
-        throw new Error("Invalid user ID");
-      }
-      const categories = await prismaClient.category.findMany({
-        where: { userId: decodeId }
-      });
-      return categories;
-    } catch (error) {
-      console.error("Error in reading categories:", error);
-      throw new Error("Failed to read categories");
-    }
-  }
-  async update(paramsId, decodeId, { title, color, expense }) {
-    try {
-      const existingCategory = await prismaClient.category.findUnique({
-        where: { userId: decodeId, id: paramsId }
-      });
-      if (!existingCategory) {
-        throw new Error("Category not found");
-      }
-      const updatedCategory = await prismaClient.category.update({
-        where: { id: paramsId },
-        data: {
-          title,
-          color,
-          expense
-        }
-      });
-      return updatedCategory;
-    } catch (error) {
-      console.error("Error in updating category:", error);
-      throw new Error("Failed to update category");
-    }
-  }
-  async delete(paramsId, decodeId) {
-    try {
-      const existingCategory = await prismaClient.category.findUnique({
-        where: { userId: decodeId, id: paramsId }
-      });
-      if (!existingCategory) {
-        throw new Error("Category not found");
-      }
-      const deletedCategoriesCount = await prismaClient.category.delete({
-        where: { userId: decodeId, id: paramsId }
-      });
-      return deletedCategoriesCount;
-    } catch (error) {
-      console.error("Error in deleting category:", error);
-      throw new Error("Failed to delete category");
-    }
-  }
-};
-var categoryService = new CategoryService();
-
-// src/controllers/CategoryController.ts
-var CategoryController = class {
-  async create(req, res) {
-    try {
-      const { title, color, expense } = req.body;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      console.log(decode);
-      if (decode && decode.userId) {
-        const categories = await categoryService.create(decode.userId, {
-          title: title.toUpperCase(),
-          color,
-          expense
-        });
-        return res.status(201).json({ success: true, categories });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error });
-    }
-  }
-  async read(req, res) {
-    try {
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const categories = await categoryService.read(decode.userId);
-        return res.status(201).json({ success: true, categories });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async update(req, res) {
-    try {
-      const { title, color, expense } = req.body;
-      const { id } = req.params;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const categories = await categoryService.update(id, decode.userId, {
-          title: title.toUpperCase(),
-          color,
-          expense
-        });
-        return res.status(201).json({ success: true, categories });
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-  async delete(req, res) {
-    try {
-      const { id } = req.params;
-      const token = req.headers.authorization;
-      const decode = decodeToken(token);
-      if (decode && decode.userId) {
-        const deletedCategory = await categoryService.delete(id, decode.userId);
-        if (deletedCategory) {
-          return res.status(200).json({ success: true, message: `Record ID - ${id} - DELETED` });
-        } else {
-          return res.status(404).json({ error: "Not Found", message: "Category doesn't exist" });
-        }
-      } else {
-        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
-      }
-    } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-};
-var categoryController = new CategoryController();
-
 // src/services/UserService.ts
-var import_bcryptjs2 = __toESM(require("bcryptjs"));
+var import_ulid = require("ulid");
 var UserService = class {
   async register({ name, email, password }) {
+    console.log(name, email, password);
     try {
       const user = await prismaClient.user.findUnique({ where: { email } });
+      console.log("User findUnique result:", user);
       if (!user) {
         const createUser = await prismaClient.user.create({
-          data: { name: name ? name : "", email, password }
+          data: { id: (0, import_ulid.ulid)(), name: name || "", email, password }
         });
+        console.log("User created:", createUser);
+        const category2 = await prismaClient.category.create({
+          data: {
+            id: (0, import_ulid.ulid)(),
+            name: "MERCADO",
+            color: "red",
+            expense: true,
+            user_id: createUser.id
+          }
+        });
+        console.log("Category created:", category2);
+        const account2 = await prismaClient.account.create({
+          data: {
+            id: (0, import_ulid.ulid)(),
+            name: "CONTA PRINCIPAL",
+            number: "012345-6",
+            branch: "012",
+            type: "Corrente",
+            user_id: createUser.id
+          }
+        });
+        console.log("Account created:", account2);
         return createUser;
       }
     } catch (error) {
@@ -17220,7 +16895,16 @@ var UserService = class {
   }
   async login({ email, password }) {
     try {
-      const user = await prismaClient.user.findUnique({ where: { email } });
+      const user = await prismaClient.user.findUnique({
+        where: { email }
+        // include: {
+        //   accounts: {
+        //     include: {
+        //       records: true,
+        //     },
+        //   },
+        // },
+      });
       if (user) {
         const decryptedPassword = await import_bcryptjs2.default.compare(password, user.password);
         if (decryptedPassword) {
@@ -17298,31 +16982,364 @@ var userController = new UserController();
 
 // src/route/expensesRoutes.ts
 var import_body_parser = __toESM(require_body_parser());
+
+// src/controllers/ApiController.ts
+var ApiController = class {
+  constructor(service) {
+    this.service = service;
+  }
+  async create(req, res) {
+    try {
+      const dataBody = req.body;
+      const token = req.headers.authorization;
+      const decode = decodeToken(token);
+      if (decode && decode.userId) {
+        const data = await this.service.create(
+          decode.userId,
+          dataBody
+        );
+        return res.status(201).json({ success: true, data });
+      } else {
+        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  async read(req, res) {
+    try {
+      const token = req.headers.authorization;
+      const decode = decodeToken(token);
+      if (decode && decode.userId) {
+        const data = await this.service.read(
+          decode.userId,
+          req.params
+        );
+        return res.status(200).json({ success: true, data });
+      } else {
+        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  async update(req, res) {
+    try {
+      const dataBody = req.body;
+      const { id } = req.params;
+      const token = req.headers.authorization;
+      const decode = decodeToken(token);
+      if (decode && decode.userId) {
+        const data = await this.service.update(
+          id,
+          decode.userId,
+          dataBody
+        );
+        return res.status(200).json({ success: true, data });
+      } else {
+        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      const token = req.headers.authorization;
+      const decode = decodeToken(token);
+      if (decode && decode.userId) {
+        const deletedDate = await this.service.delete(
+          id,
+          decode.userId
+        );
+        if (deletedDate) {
+          return res.status(200).json({
+            success: true,
+            message: `ID - ${id} - DELETED`
+          });
+        } else {
+          return res.status(404).json({
+            error: "Not Found",
+            message: `ID doesn't exist`
+          });
+        }
+      } else {
+        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+  async updateManyTitles(req, res) {
+    try {
+      const { currentName, updateName } = req.body;
+      const token = req.headers.authorization;
+      const decode = decodeToken(token);
+      if (decode && decode.userId) {
+        const categories = await this.service.updateManyTitles(
+          currentName,
+          updateName
+        );
+        return res.status(201).json({ success: true, categories });
+      } else {
+        return res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+};
+var ApiController_default = ApiController;
+
+// src/services/ApiService.ts
+var import_ulid2 = require("ulid");
+var ApiService = class {
+  constructor(entityName, prismaInstance) {
+    this.prismaInstance = prismaInstance;
+    this.entityName = entityName;
+  }
+  async create(decodeId, data) {
+    try {
+      if ("accountId" in data) {
+        const user = await prismaClient.user.findUnique({
+          where: {
+            id: decodeId
+          },
+          include: {
+            accounts: {
+              where: {
+                id: data.accountId
+              }
+            }
+          }
+        });
+        if (!user) {
+          throw new Error(`User not found for ${this.entityName} creation`);
+        }
+        const newData = await this.prismaInstance.create({
+          data: { ...data, id: (0, import_ulid2.ulid)(), accountId: data.accountId }
+        });
+        return newData;
+      } else {
+        const user = await prismaClient.user.findUnique({
+          where: { id: decodeId }
+        });
+        if (!user) {
+          throw new Error(`User not found for ${this.entityName} creation`);
+        }
+        const newData = await this.prismaInstance.create({
+          data: { ...data, id: (0, import_ulid2.ulid)(), user_id: decodeId }
+        });
+        return newData;
+      }
+    } catch (error) {
+      console.error(`Error in ${this.entityName} creation:`, error);
+      throw new Error(`Failed to create ${this.entityName}`);
+    }
+  }
+  async read(decodeId, paramsId) {
+    try {
+      if (decodeId == null) {
+        throw new Error("Invalid user ID");
+      }
+      if ("id" in paramsId) {
+        const newData2 = await this.prismaInstance.findMany({
+          where: { user_id: decodeId },
+          include: { records: { where: { account_id: paramsId.id } } }
+        });
+        const data = newData2.filter((item) => item.id == paramsId.id);
+        return data[0].records;
+      } else {
+        const data = await this.prismaInstance.findMany({
+          where: { user_id: decodeId }
+        });
+        if (data.length > 0) {
+          if ("branch" in data[0]) {
+            const data2 = await this.prismaInstance.findMany({
+              where: { user_id: decodeId },
+              include: { records: true }
+            });
+            return data2;
+          }
+        }
+        return data;
+      }
+    } catch (error) {
+      console.error(`Error in reading ${this.entityName}:`, error);
+      throw new Error(`Failed to read ${this.entityName}`);
+    }
+  }
+  async update(paramsId, decodeId, data) {
+    try {
+      if (this.entityName === "record") {
+        const newData = await prismaClient.record.update({
+          where: { id: paramsId },
+          data
+        });
+        return newData;
+      } else {
+        const findDate = await this.prismaInstance.findUnique({
+          where: { user_id: decodeId, id: paramsId }
+        });
+        if (!findDate) {
+          throw new Error(`${this.entityName} not found`);
+        }
+        const newData = await this.prismaInstance.update({
+          where: { id: paramsId },
+          data
+        });
+        return newData;
+      }
+    } catch (error) {
+      console.error(`Error in updating ${this.entityName}:`, error);
+      throw new Error(`Failed to update ${this.entityName}`);
+    }
+  }
+  async delete(paramsId, decodeId) {
+    try {
+      if (this.entityName === "record") {
+        const findDate = await prismaClient.record.delete({
+          where: { id: paramsId }
+        });
+        return findDate;
+      } else {
+        const newData = await this.prismaInstance.findUnique({
+          where: { user_id: decodeId, id: paramsId }
+        });
+        if (!newData) {
+          throw new Error(`${this.entityName} not found`);
+        }
+        const findDate = await this.prismaInstance.delete({
+          where: { user_id: decodeId, id: paramsId }
+        });
+        return findDate;
+      }
+    } catch (error) {
+      console.error(`Error in deleting ${this.entityName}:`, error);
+      throw new Error(`Failed to delete ${this.entityName}`);
+    }
+  }
+  async updateManyTitles(currentName, updateName) {
+    try {
+      const findRecords = await prismaClient.record.updateMany({
+        where: { category: currentName.toUpperCase().trim() },
+        data: { category: updateName.toUpperCase().trim() }
+      });
+      if (!findRecords) {
+        throw new Error("Registers not found");
+      }
+      return findRecords;
+    } catch (error) {
+      console.error("Error in updating category:", error);
+      throw new Error("Failed to update category");
+    }
+  }
+};
+
+// src/route/ApiRouter.ts
+var ApiRouter = class {
+  constructor(router2, endpoint, schemaInstance, authorization2) {
+    this.router = router2;
+    this.endpoint = endpoint;
+    this.schemaInstance = schemaInstance;
+    this.authorization = authorization2;
+    this.apiService = new ApiService(this.endpoint, this.schemaInstance);
+    this.apiController = new ApiController_default(this.apiService);
+    if (authorization2) {
+      this.PrivateRoutes();
+    } else {
+      this.publicRoutes();
+    }
+  }
+  publicRoutes() {
+    this.router.post(
+      `/${this.endpoint}`,
+      (req, res) => this.apiController.create(req, res)
+    );
+    this.router.get(
+      `/${this.endpoint}`,
+      (req, res) => this.apiController.read(req, res)
+    );
+    this.router.put(
+      `/${this.endpoint}/:id`,
+      (req, res) => this.apiController.update(req, res)
+    );
+    this.router.delete(
+      `/${this.endpoint}/:id`,
+      (req, res) => this.apiController.delete(req, res)
+    );
+  }
+  PrivateRoutes() {
+    this.router.post(
+      `/${this.endpoint}`,
+      this.authorization,
+      (req, res) => this.apiController.create(req, res)
+    );
+    this.router.get(
+      `/${this.endpoint}`,
+      this.authorization,
+      (req, res) => this.apiController.read(req, res)
+    );
+    this.router.put(
+      `/${this.endpoint}/:id`,
+      this.authorization,
+      (req, res) => this.apiController.update(req, res)
+    );
+    this.router.delete(
+      `/${this.endpoint}/:id`,
+      this.authorization,
+      (req, res) => this.apiController.delete(req, res)
+    );
+    this.router.put(
+      "/records/update",
+      this.authorization,
+      (req, res) => this.apiController.updateManyTitles(req, res)
+    );
+    this.router.get(
+      `/record/:id`,
+      this.authorization,
+      (req, res) => this.apiController.read(req, res)
+    );
+  }
+};
+
+// src/route/expensesRoutes.ts
 var router = (0, import_express.Router)();
 router.use(import_body_parser.default.json());
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/refresh", userController.refreshToken);
-router.post("/records", authorization, recordController.create);
-router.get("/records", authorization, recordController.read);
-router.put("/record/:id", authorization, recordController.update);
-router.delete("/record/:id", authorization, recordController.delete);
-router.put("/records/update", authorization, recordController.updateManyTitles);
-router.post("/categories", authorization, categoryController.create);
-router.get("/categories", authorization, categoryController.read);
-router.put("/category/:id", authorization, categoryController.update);
-router.delete("/category/:id", authorization, categoryController.delete);
+var account = new ApiRouter(
+  router,
+  "account",
+  prismaClient.account,
+  authorization
+);
+var category = new ApiRouter(
+  router,
+  "category",
+  prismaClient.category,
+  authorization
+);
+var record = new ApiRouter(
+  router,
+  "record",
+  prismaClient.record,
+  authorization
+);
 var expensesRoutes_default = router;
 
 // src/server.ts
-var import_cors = __toESM(require("cors"));
+var import_express2 = __toESM(require("express"));
+import_dotenv.default.config();
 var server = (0, import_express2.default)();
+var port = 3001;
 server.use((0, import_cors.default)({ origin: "*" }));
 server.use(import_express2.default.json());
 server.use(expensesRoutes_default);
-var PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
-  console.log(`Servidor ouvindo na porta ${PORT}`);
+server.listen(port, () => {
+  console.log(`Servidor ouvindo na porta ${port}`);
 });
 /*! Bundled license information:
 
