@@ -1,7 +1,9 @@
-import express from "express";
-
 import cors from "cors";
+import dotenv from "dotenv";
 import router from "../src/route/expensesRoutes";
+
+import express from "express";
+dotenv.config();
 
 const server = express();
 
