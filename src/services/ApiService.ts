@@ -12,7 +12,7 @@ export class ApiService<T> {
 
   async create(decodeId: string, data: any) {
     try {
-      if ("accountId" in data) {
+      if ("account_id" in data) {
         const user = await prismaClient.user.findUnique({
           where: {
             id: decodeId,
