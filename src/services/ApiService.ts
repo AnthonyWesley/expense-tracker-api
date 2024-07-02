@@ -20,7 +20,7 @@ export class ApiService<T> {
           include: {
             accounts: {
               where: {
-                id: data.accountId,
+                id: data.account_id,
               },
             },
           },
