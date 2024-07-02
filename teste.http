@@ -1,0 +1,51 @@
+POST http://localhost:3001/register
+Content-Type: application/json
+
+{
+    "name": "Jonh Doe",
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+###
+GET http://localhost:3001/account
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhZWlNCUTMzWTNBUjdBWEZaRUUzVjhUQiIsImlhdCI6MTcxNjkwNjI4NywiZXhwIjoxNzE2OTA5ODg3fQ.BIw56YKCW9QYVC_NX2PQ6cp7_McsKlmjiJWJ9z8IBuo
+
+###
+
+POST http://localhost:3001/account
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhZWlNCUTMzWTNBUjdBWEZaRUUzVjhUQiIsImlhdCI6MTcxNjkwNjI4NywiZXhwIjoxNzE2OTA5ODg3fQ.BIw56YKCW9QYVC_NX2PQ6cp7_McsKlmjiJWJ9z8IBuo
+Content-Type: application/json
+
+{
+  "name": "Nu Bank"
+}
+
+###
+
+DELETE  http://localhost:3001/test/d9131560-a2f4-4f92-91a8-f22604b8f56b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhZWlNCUTMzWTNBUjdBWEZaRUUzVjhUQiIsImlhdCI6MTcxNjkwNjI4NywiZXhwIjoxNzE2OTA5ODg3fQ.BIw56YKCW9QYVC_NX2PQ6cp7_McsKlmjiJWJ9z8IBuo
+
+###
+
+POST http://localhost:3001/record
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiZDM2NDgxOC04ZGJiLTQ0ZDEtOWVhZC1iZDg4NWYxOGIyNWYiLCJpYXQiOjE3MTE0NjExNTUsImV4cCI6MTcxMTQ2NDc1NX0.4SpPGa0FCIaZ--KZcIZJFLmc_WLkYkmGPtXjzEK6grM
+Content-Type: application/json
+
+{
+  "date": "2024-03-16T12:00:00Z",
+  "value": 20.50,
+  "category": "FARMACIA",
+  "description": "ALKK",
+  "accountId": "01HYZSK7Z26SNQTAVMERJKBME1"
+}

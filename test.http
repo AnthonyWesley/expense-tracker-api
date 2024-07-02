@@ -1,0 +1,68 @@
+POST  http://expense-tracker-api-ochre.vercel.app/register
+Content-Type: application/json
+
+{
+    "name": "Jonh Doe",
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "email": "john@doe.com",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:3001/account
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhaSldXMDFNVk43N1RKRFRTUTdaSjJQMyIsImlhdCI6MTcxNzg4ODgxOCwiZXhwIjoxNzE3ODkyNDE4fQ.KLYKUbL5T41FP-3TTLURB4MwBBS_WHYbbbVMPCQ_bKs
+Content-Type: application/json
+
+{
+  "name": "Salário",
+  "color": "#10b981",
+  "expense": false
+}
+
+###
+
+
+GET http://localhost:3001/record/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhaSldXMDFNVk43N1RKRFRTUTdaSjJQMyIsImlhdCI6MTcxNzg4ODgxOCwiZXhwIjoxNzE3ODkyNDE4fQ.KLYKUbL5T41FP-3TTLURB4MwBBS_WHYbbbVMPCQ_bKs
+
+###
+
+
+DELETE http://localhost:3001/record/01HZJXVPM9C0NDGKZF4ZNVHQNS
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhaSldXMDFNVk43N1RKRFRTUTdaSjJQMyIsImlhdCI6MTcxNzg4ODgxOCwiZXhwIjoxNzE3ODkyNDE4fQ.KLYKUbL5T41FP-3TTLURB4MwBBS_WHYbbbVMPCQ_bKs
+
+###
+
+POST http://localhost:3001/account
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhaSldXMDFNVk43N1RKRFRTUTdaSjJQMyIsImlhdCI6MTcxNzg4ODgxOCwiZXhwIjoxNzE3ODkyNDE4fQ.KLYKUbL5T41FP-3TTLURB4MwBBS_WHYbbbVMPCQ_bKs
+Content-Type: application/json
+
+{
+  "name": "NU BANK"
+}
+
+
+###
+
+
+PUT  http://localhost:3001/account/01HZJXVPM9C0NDGKZF4ZNVHQNS
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUhaSldXMDFNVk43N1RKRFRTUTdaSjJQMyIsImlhdCI6MTcxNzg4ODgxOCwiZXhwIjoxNzE3ODkyNDE4fQ.KLYKUbL5T41FP-3TTLURB4MwBBS_WHYbbbVMPCQ_bKs
+Content-Type: application/json
+
+{
+  "date": "2024-06-16T12:00:00Z",
+  "value": 20.50,
+  "category": "MERCADO",
+  "description": "EDITADO",
+  "accountId":"01HZJWW04HWGJTF2HB9PWY8PBS"
+}
